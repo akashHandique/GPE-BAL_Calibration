@@ -1,0 +1,9 @@
+# Control sections for steady2d simulation
+
+2  -1
+Outflow
+780148  634923
+
+Inflow
+208652  226454
+

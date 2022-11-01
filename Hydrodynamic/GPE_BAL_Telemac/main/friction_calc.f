@@ -75,16 +75,22 @@
 !+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 !
       INTEGER                       :: I, ITER
-      DOUBLE PRECISION              :: A, B, TIERS, TIEERS 
+      DOUBLE PRECISION              :: A, B, C, D, E, F, TIERS, TIEERS 
       DOUBLE PRECISION              :: UNORM, INLOG, AUX, AXOM, AXAM, NXXM
-      DOUBLE PRECISION              :: OLDUST, OLDCF
+      DOUBLE PRECISION              :: OLDUST, OLDCF, G, H
       DOUBLE PRECISION              :: RE, UST, DW, DWPLUS
       DOUBLE PRECISION              :: TERM1,TERM2
 !
 !-----------------------------------------------------------------------
 !
-      A = 7.0D0
-      B = 3.8D0
+      A = 7.4D0
+      B = 1.1D0
+      C = 7.4D0
+      D = 3.9D0
+      E = 7.9D0
+      F = 1.1D0
+      G = 6.1D0
+      H = 1.0D0
 	  TIERS = 1.D0/3.D0
       TIEERS = 5.D0/3.D0
       SELECT CASE (KFROT)
@@ -119,7 +125,9 @@
       CASE(2)
 !
         DO I = N_START, N_END
-          CF%R(I) = 2.D0*GRAV/(CHESTR%R(I)**2)
+          AXAM=(A*B*(HC%R(I)/CHESTR%R(I)))**2
+          AXOM=8.D0*(A**2)+8.D0*(B**2)*(HC%R(I)/CHESTR%R(I))**1.67D0
+          CF%R(I) = AXOM/AXAM
         ENDDO
 !
 ! LAW OF STRICKLER
@@ -128,8 +136,8 @@
       CASE(3)
 !
         DO I = N_START, N_END
-          AXAM=(A*B*(HC%R(I)/CHESTR%R(I)))**2
-          AXOM=8.D0*(A**2)+8.D0*(B**2)*(HC%R(I)/CHESTR%R(I))**1.67D0
+          AXAM=(C*D*(HC%R(I)/CHESTR%R(I)))**2
+          AXOM=8.D0*(C**2)+8.D0*(D**2)*(HC%R(I)/CHESTR%R(I))**1.67D0
           CF%R(I) = AXOM/AXAM
         ENDDO
 !
@@ -139,7 +147,9 @@
       CASE(4)
 !
         DO I = N_START, N_END
-          CF%R(I) = 2.D0*GRAV*(CHESTR%R(I)**2)/HC%R(I)**TIERS
+          AXAM=(E*F*(HC%R(I)/CHESTR%R(I)))**2
+          AXOM=8.D0*(E**2)+8.D0*(F**2)*(HC%R(I)/CHESTR%R(I))**1.67D0
+          CF%R(I) = AXOM/AXAM
         ENDDO
 !
 ! LAW OF NIKURADSE
@@ -147,10 +157,10 @@
 !
       CASE(5)
 !
-!       NOTE: 11.036 IS 30.D0/EXP(1.D0)
         DO I = N_START, N_END
-          AUX=MAX(1.001D0,HC%R(I)*11.036D0/CHESTR%R(I))
-          CF%R(I) = 2.D0 / (LOG(AUX)/KARMAN)**2
+          AXAM=(G*H*(HC%R(I)/CHESTR%R(I)))**2
+          AXOM=8.D0*(G**2)+8.D0*(H**2)*(HC%R(I)/CHESTR%R(I))**1.67D0
+          CF%R(I) = AXOM/AXAM
         ENDDO
 !
 ! LOG LAW OF WALL FOR VISCOUS FRICTION

@@ -14,7 +14,7 @@ import numpy as np
 import math
 from datetime import datetime
 import init
-from ppmodules.selafin_io_pp import *
+
 
 
 def update_steering_file(prior_distribution, parameters_name, friction_name,

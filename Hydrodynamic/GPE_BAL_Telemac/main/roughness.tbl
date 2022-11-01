@@ -1,0 +1,57 @@
+* ----------------------------------------------------------------------------- 
+*  Beschreibung der Materialbereiche 
+* 
+*  Implementierte Rauheitsgesetze: 
+*    NOFR : no friction         (no Wert) 
+*    HAAL : Haaland   law       (1 Wert  : rB) 
+*    CHEZ : Chezy     law       (1 Wert  : rB) 
+*    STRI : Strickler law       (1 Wert  : rB) 
+*    MANN : Manning   law       (1 Wert  : rB) 
+*    NIKU : Nikuradse law       (1 Wert  : rB) 
+*    LOGW : Log Wall  law       (1 Wert  : rB) 
+*    COWH : Colebrook-White law (2 Werte : rB, nDef) 
+* 
+*  no             : Nummer des Materialbereichs 
+* 
+*  Boden Gesetzt 
+*  ------------- 
+*  typeB          : Rauheitsgesetz  fuer Sohlberandung 
+*  rB             : Rauheitsbeiwert fuer Sohlberandung 
+*  nDefB          : Manning-Beiwert fuer flach ueberstroemte Bereiche (option) 
+* 
+*  Wand Gesetzt (nuer fuer k-epsilon modell) 
+*  ----------------------------------------- 
+*  typeS          : Rauheitsgesetz  fuer seitliche Berandung          (option) 
+*  rS             : Rauheitsbeiwert fuer seitliche Berandung          (option) 
+*  nDefS          : Manning-Beiwert fuer flach ueberstroemte Bereiche (option) 
+* 
+*  Non-submerged Vegetation (if needed) 
+*  ------------------------ 
+*  dp             : mittlerer Durchmesser und                         (option) 
+*  sp             : mittlerer Abstand von ideellen Rauheitselementen  (option) 
+* 
+* ----------------------------------------------------------------------------- 
+* no        typeB  rB    NDefB  typeS  rS  NDefS   dp     sp 
+* 
+
+  1         CHEZ   0.013  NULL
+  2         CHEZ   0.018  NULL
+  3         CHEZ   0.038  NULL
+  4         CHEZ   0.053  NULL
+  5         CHEZ   0.077  NULL
+  6         CHEZ   0.111  NULL
+  7         CHEZ   0.162  NULL
+  8         STRI   0.220  NULL
+  9         STRI   0.298  NULL
+  10        STRI   0.401  NULL
+  11        STRI   0.436  NULL
+  12        STRI   0.660  NULL
+  13        STRI   0.564  NULL
+  14        MANN   0.202  NULL
+  15        NIKU   0.240  NULL
+            
+
+ 
+
+END 
+  
