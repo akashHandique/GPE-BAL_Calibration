@@ -3,7 +3,7 @@ Auxiliary functions to couple the Surrogate-Assisted Bayesian inversion techniqu
 specific of the parameters that wanted to be changed at the time, but they can be used as a base on how to modify
 Telemac's input and output files
 
-Contact: eduae94@gmail.com
+Contact: iamakash0123@gmail.com
 '''
 
 # Import libraries
@@ -24,7 +24,7 @@ import bea as pp
 def update_steering_file(prior_distribution, parameters_name, friction_name,
                          telemac_name, result_name_telemac, n_simulation):
     """
-    Function amends calibration parameters in the friction_calc subroutine and
+    Function amends calibration parameters in the friction_calc.f subroutine and
     updating new strings to be included in the updated file by calling two functions.
     Parameters
     ----------
@@ -41,9 +41,9 @@ def update_steering_file(prior_distribution, parameters_name, friction_name,
     n_simulation : Integar
          Number of simulation
 
-    Returns updated friction_user file with new calibration parameter values
+    Returns updated file with new calibration parameter values
     -------
-    updates the friction_calc subroutine
+    updates the friction_calc.f subroutine
     """
 
     # Update A
@@ -103,16 +103,16 @@ def create_string(param_name, values):
 
 def rewrite_results_file(param_name, updated_string, path):
     """
-    Function updates the parameter name and value to the telemac file
+    Function updates the parameter name and value to the telemac .cas file
     Parameters
     ----------
     param_name :  String for the parameter name
-    updated_string : Updated string for the telemac file
-    path : Path of the telemac file
+    updated_string : Updated string for the telemac .cas file
+    path : Path of the telemac .cas file
 
     Returns
     -------
-    Updated telemac file with updated string
+    Updated telemac .cas file with updated string
     """
     variable_interest = param_name
 
@@ -142,15 +142,15 @@ def rewrite_results_file(param_name, updated_string, path):
 
 def rewrite_parameter_file(param_name, updated_string, path):
     """
-    Function updates the parameter name and value to the friction_user subroutine file
+    Function updates the parameter name and value to the friction_calc.f subroutine file
     Parameters
     ----------
     param_name :  String
     Name of the parameter name
     updated_string : String
-    String to be updated in the friction_calc subroutine file
+    String to be updated in the friction_calc.f subroutine file
     path : String
-    Path of the friction_calc subroutine file
+    Path of the friction_calc.f subroutine file
 
     Returns
     -------
@@ -215,22 +215,27 @@ def run_telemac(telemac_file_name, number_processors):
 
 def get_variable_value(file_name,x_mesh, y_mesh, save_name_xyz="", save_raster="",
                        save_name = ""):
+
     """
-    Function extracts the calibrated variable with respect to nodes and saves the data in a file
+    Function extracts the velocity and water depth variables from the .slf file
+    and arranged in proper format for further processing.
     Parameters
     ----------
     file_name : String
     Result file name to extract the calibrated variable
-    calibration_variable : String
-    Variable of interest to be extracted corresponding to nodes
-    specific_nodes : Numpy array
-    Specific nodes to be indexed
-    save_name : String
-    Name of the saved file
-
+    x_mesh : Numpy array
+    Latitude of the calibration points
+    y_mesh : Numpy array
+    Longitude of the calibration points
+    save_name_xyz: String
+    Path of the file to save the .xyz generated file
+    save_raster: String
+    Path of the file to save the generated raster from the .xyz file data
+    save_name: String
+    Path of the file .txt file to save the extracted hydraulic variable data
     Returns
     -------
-    Numpy array of results in the specific nodes.
+    Numpy array with latitude, longitude, velocity and water depth data.
     """
 
 ########################################################################################################################
@@ -290,6 +295,22 @@ def get_variable_value(file_name,x_mesh, y_mesh, save_name_xyz="", save_raster="
 
 
 def raster_create(interpol_method, raster_out_save="", save_xyz=""):
+    """
+    Function creates rasters from .xyz file data
+    Parameters
+    ----------
+    interpol_method: String
+    name of the interpolation method for rasterisation
+    raster_out_save: String
+    path of the file to save the generated raster
+    save_xyz: String
+    Path of the file .xyz file
+
+    Returns
+    Rasters and saves them in defined path.
+    -------
+
+    """
     map_file = pp.PreProFuzzy(pd.read_csv(save_xyz, skip_blank_lines=True), attribute="variable", crs='EPSG:4326',
                               nodatavalue=-9999, res=1)
     array_ = map_file.norm_array(method=interpol_method)

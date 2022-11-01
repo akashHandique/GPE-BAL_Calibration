@@ -7,9 +7,9 @@ Methodology from:
 Oladyshkin, S., Mohammadi, F., Kroeker, I., & Nowak, W. (2020). Bayesian3 Active Learning for the Gaussian Process
 Emulator Using Information Theory. Entropy, 22(8), 890.
 
-Adaptation to python and coupling with Telemac by: Eduardo Acuna and Farid Mohammadi
+Adaptation to python and coupling with Telemac by: Eduardo Acuna and Farid Mohammadi and Akash Jyoti Handique
 
-Contact: eduae94@gmail.com
+Contact: iamakash0123@gmail.com
 '''
 
 # Import libraries
@@ -66,8 +66,6 @@ al_strategy = "RE"
 #
 # Telemac
 telemac_name = "yuba_unsteady.cas"
-#gaia_name = "run_liquid_gaia.cas"
-#result_name_gaia = "'res_gaia_PC"
 # PC stands for parameter combination
 result_name_telemac = "res_tel_PC"
 n_processors = "4"
@@ -185,7 +183,7 @@ for iter in range(0, iteration_limit):
     print(model_results)
 
     # Move the created files to their respective folders
-    # shutil.move(result_name_gaia[1:] + str(n_simulation+1+iter) + ".slf", path_simulations)
+
     shutil.move(result_name_telemac[0:] + str(n_simulation+1+iter) + ".slf", path_simulations)
 
     # Append the parameter used to a file
